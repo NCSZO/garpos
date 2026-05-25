@@ -149,13 +149,12 @@ def outresults(odir, suf, cfg, imp0, slvidx0,
     shots['gradV2n'] = av[0][4]/2. + av[1][4]/2.
     shots["LogResidual"] = shots["ResiTT"]
     shots["ResiTT"] = shots["ResiTTreal"]
-    # 	ashot = shots.loc[:,[
-    # 		'SET','LN','MT','TT','ResiTT', 'TakeOff', 'gamma', 'flag',
-    # 		'ST','ant_e0','ant_n0','ant_u0','head0','pitch0','roll0',
-    # 		'RT','ant_e1','ant_n1','ant_u1','head1','pitch1','roll1',
-    # 		'dV0', 'gradV1e', 'gradV1n', 'gradV2e', 'gradV2n',
-    # 		'dV', 'LogResidual', 
-    # 		]]
+    
+    # Check for position uncertainty in columns. If they are not present, fill with 0s
+    error_cols = ['sde0','sdn0','sdu0','sde1','sdn1','sdu1']
+    for col in error_cols:
+        if col not in shots.columns:
+            shots[col] = 0.0
 
     ashot = shots.loc[:,[
         'SET','LN','MT','TT','ResiTT', 'TakeOff', 'gamma', 'flag',
